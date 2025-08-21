@@ -7,14 +7,38 @@ The design ensures synchronous operation with the SPI clock while maintaining re
 ---
 
 ## Features
-- SPI Slave interface compliant with standard SPI modes.  
-- Full-duplex communication via MOSI and MISO.  
-- Single-Port Synchronous RAM for data storage.  
-- Supports both read and write operations.  
-- Synchronous operation with SCK from master.  
-- Parameterized memory depth and data width.  
-- Fully synthesizable Verilog code.  
-- Testbench for functional verification.  
+
+- **SPI Slave with FSM Control**
+  - Finite State Machine (FSM) with **5 states**:
+    - `IDLE`
+    - `CHK_CMD`
+    - `WRITE`
+    - `READ_ADD`
+    - `READ_DATA`
+
+- **FSM Encoding Experiments**
+  - Sequential encoding (`(* fsm_encoding = "sequential" *)`)
+  - One-Hot encoding
+  - Gray encoding  
+  - Each encoding style evaluated for **timing performance** and **FPGA area utilization**.  
+  - Best approach selected based on synthesis results.
+
+- **RX Data Tagging (2-bit MSB)**
+  - `2'b00` → Address  
+  - `2'b01` → Write Data  
+  - `2'b10` → Read Address  
+  - `2'b11` → Read Data  
+
+- **Single-Port Synchronous RAM**
+  - 8-bit data width  
+  - 256 memory locations  
+  - Read/Write operations controlled by `rx_valid`  
+
+- **Verification and Deployment**
+  - Simulation testbenches included  
+  - Timing analysis completed  
+  - FPGA bitstream successfully generated  
+
 
 ---
 
@@ -38,14 +62,15 @@ The design ensures synchronous operation with the SPI clock while maintaining re
 ---
 
 ## Documentation
-The full design documentation `SPI_Report.pdf` includes:
+The full design documentation `spi_slave_document.pdf` includes:
 
 - RTL Design  
 - Testbench description  
 - Simulation results  
 - DO file  
 - Constraint file  
-- RTL Schematic  
+- RTL Schematic
+- Netlist file 
 - For each encoding style (Gray, One-Hot, and Sequential):  
   - Synthesis report  
   - Implementation report  
@@ -59,10 +84,10 @@ The full design documentation `SPI_Report.pdf` includes:
 ---
 
 ## Design Files
-- `SPI.v` : Verilog module for SPI slave implementation.  
+- `SPI_Slave.v` : Verilog module for SPI slave implementation.  
 - `RAM.v` : Verilog module for single-port RAM.  
-- `SPI_Wrapper.v` : Top-level Verilog module integrating SPI slave and RAM.  
-- `SPI_Wrapper_tb.v` : Testbench for simulation and verification of the SPI wrapper.  
+- `TopModule.v` : Top-level Verilog module integrating SPI slave and RAM.  
+- `SPI_Slave_tb.v` : Testbench for simulation and verification of the SPI wrapper.  
 - `run.do` : Script file for automating the simulation process.  
 
 ---
