@@ -44,12 +44,7 @@ The design ensures synchronous operation with the SPI clock while maintaining re
 
 ## Project Structure
 
-├── bitstream/         # Bitstream file
-├── constraints/       # Clock and pin constraint file (.xdc)
-├── netlist/           # Netlist file
-├── src/               # Verilog source files
-├── tb/                # Testbench files
-├── SPI_Report.pdf     # Detailed project report
+📁 Bit_Stream 📁 constraints  📁 do_file 📁 Netlist_file 📁 RTL_design_code 📁 tb  📄 spi_slave_document.pdf 📄 README.md
 
 ---
 
